@@ -42,15 +42,14 @@
 #           - Initial code
 #
 import os
-import sys
 import re
-import json
-import urllib
-import sublime
-import tempfile
 import subprocess
-import sublime_plugin
+import sys
+import tempfile
 import webbrowser
+
+import sublime
+import sublime_plugin
 
 PLUGIN_VERSION = "2.0.0"
 
