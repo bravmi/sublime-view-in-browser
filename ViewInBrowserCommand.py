@@ -209,7 +209,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
         # If we've specified settings for a local server environment
         # use them
         #
-        if projectSettings:
+        if projectSettings and projectSettings.get('basePath') and projectSettings.get('baseUrl'):
             fileToOpen = self.giveFileAProjectPath(fileToOpen, projectSettings["basePath"], projectSettings["baseUrl"])
 
         #
@@ -233,9 +233,13 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
         # And open. If the settings file contains a valid selected browser use that
         # command to open this file. Otherwise use the system default.
         #
-        if pluginSettings["baseCommand"]:
+        if projectSettings and projectSettings.get('baseCommand'):
+            baseCommand = projectSettings.get('baseCommand')
+        else:
+            baseCommand = pluginSettings.get('baseCommand')
+        if baseCommand:
             command = "%s %s" % (
-                pluginSettings["baseCommand"],
+                baseCommand,
                 fileToOpen.decode().encode(sys.getfilesystemencoding()) if self._pythonVersion < 3 else fileToOpen,
             )
 
